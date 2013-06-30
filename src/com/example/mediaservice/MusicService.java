@@ -9,23 +9,30 @@ import android.os.IBinder;
 import android.widget.Toast;
 import android.widget.MediaController;
 
-
-
+//---------------------------------------------------------------------------------------
 public class MusicService extends Service 
-	implements MediaPlayer.OnErrorListener, 
-			   MediaController.MediaPlayerControl,
-			   MediaPlayer.OnBufferingUpdateListener
+	implements
+		MediaPlayer.OnErrorListener,
+		
+		// Interface used by the visual representation of the player controls.
+		MediaController.MediaPlayerControl,
+		
+		// implemented to possibly upgrade the media player interface.
+		MediaPlayer.OnBufferingUpdateListener
 	
 	{
-	
+	// Connect service who to call onBind
     private final IBinder mBinder = new ServiceBinder();
     
+    // Instance of media player
     MediaPlayer mPlayer;
     
+    // Saves the data buffer of the media player (used by MediaController).
     private int mBuffer = 0;
     
     public MusicService() { }
-
+    
+    // Called by the interface ServiceConnected when calling the service
     public class ServiceBinder extends Binder {
      	 MusicService getService()
     	 {
